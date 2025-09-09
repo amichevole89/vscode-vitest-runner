@@ -1,12 +1,13 @@
 {
   "name": "vscode-vitest-runner-optimized",
   "displayName": "Vitest Runner Optimized",
-  "version": "0.0.1",
-  "main": "dist/index.js",
-  "icon": "logo.png",
-  "license": "MIT",
   "description": "Vitest case runner - optimized.",
+  "version": "0.1.0",
   "publisher": "amichevole",
+  "license": "MIT",
+  "icon": "logo.png",
+  "repository": "git@github.com:amichevole89/vscode-vitest-runner.git",
+  "author": "amichevole89 <postino.amichevole@gmail.com>",
   "engines": {
     "vscode": "^1.65.0"
   },
@@ -19,26 +20,74 @@
     "runner",
     "codelens"
   ],
-  "repository": "git@github.com:amichevole89/vscode-vitest-runner.git",
-  "author": "amichevole89 <postino.amichevole@gmail.com>",
+  "main": "dist/index.js",
   "activationEvents": [
     "onLanguage:typescript",
     "onLanguage:javascript",
     "onLanguage:typescriptreact",
-    "onLanguage:javascriptreact"
+    "onLanguage:javascriptreact",
+    "onCommand:vitest.runTest",
+    "onCommand:vitest.debugTest",
+    "onCommand:vitest.runTestLoop"
   ],
-  "devDependencies": {
-    "@types/vscode": "^1.65.0",
-    "esbuild": "^0.14.27",
-    "prettier": "^2.6.0",
-    "typescript": "^4.6.2",
-    "vitest": "^0.7.7",
-    "vsce": "^2.7.0"
+  "contributes": {
+    "configuration": {
+      "title": "Vitest Runner Optimized",
+      "properties": {
+        "vitestRunner.loopCount": {
+          "type": "number",
+          "default": 20,
+          "minimum": 1,
+          "description": "How many times the Run(×N) buttons will execute a test."
+        },
+        "vitestRunner.extraArgs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": [],
+          "description": "Extra args appended to vitest commands (e.g. [\"--reporter\",\"verbose\"])."
+        },
+        "vitestRunner.forceColorEnv": {
+          "type": "boolean",
+          "default": true,
+          "description": "Set FORCE_COLOR=1 for vitest so ANSI colors render in the terminal."
+        },
+        "vitestRunner.addColorFlag": {
+          "type": "boolean",
+          "default": true,
+          "description": "Append --color to vitest args to ensure colored output."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "vitest.runTest",
+        "title": "Run(Vitest)"
+      },
+      {
+        "command": "vitest.debugTest",
+        "title": "Debug(Vitest)"
+      },
+      {
+        "command": "vitest.runTestLoop",
+        "title": "Run(×N)"
+      }
+    ]
   },
   "scripts": {
     "build": "node ./scripts/build.js",
     "package": "yarn build && yarn vsce package",
     "format:check": "prettier --config ./prettier.config.json --c ./src/**/*.ts",
     "format:write": "yarn format:check --write"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.1",
+    "@types/vscode": "^1.65.0",
+    "esbuild": "^0.14.27",
+    "prettier": "^2.6.0",
+    "typescript": "^4.9.5",
+    "vitest": "^0.7.7",
+    "vsce": "^2.7.0"
   }
 }
