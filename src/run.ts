@@ -1,49 +1,37 @@
-import * as vscode from 'vscode';
-import * as path from 'path';
+import * as vscode from "vscode";
 
-function buildVitestArgs(text: string) {
-    return ['vitest', 'run', '-t', text];
-}
-
-function buildCdArgs(path: string) {
-    return ['cd', path];
-}
-
-export function runInTerminal(text: string, filename: string) {
-    const casePath = path.dirname(filename);
-    const terminal = vscode.window.createTerminal(`vitest - ${text}`);
-
-    const casePathStr = JSON.stringify(casePath);
-    const caseNameStr = JSON.stringify(text);
-
-    const cdArgs = buildCdArgs(casePathStr);
-    terminal.sendText(cdArgs.join(' '), true);
-
-    const vitestArgs = buildVitestArgs(caseNameStr);
-    const npxArgs = ['npx', ...vitestArgs];
-    terminal.sendText(npxArgs.join(' '), true);
-    terminal.show();
+function buildVitestCommand(filename: string, testName: string): string {
+  const filenameArg = JSON.stringify(filename);
+  const testNameArg = JSON.stringify(testName);
+  return `npx vitest run ${filenameArg} -t ${testNameArg}`;
 }
 
 function buildDebugConfig(
-    cwd: string,
-    text: string
+  filename: string,
+  testName: string
 ): vscode.DebugConfiguration {
-    return {
-        name: 'Debug vitest case',
-        request: 'launch',
-        runtimeArgs: buildVitestArgs(text),
-        cwd,
-        runtimeExecutable: 'npx',
-        skipFiles: ['<node_internals>/**'],
-        type: 'pwa-node',
-        console: 'integratedTerminal',
-        internalConsoleOptions: 'neverOpen'
-    };
+  return {
+    name: "Debug Vitest Case",
+    request: "launch",
+    runtimeArgs: ["vitest", "run", filename, "-t", testName],
+    cwd: vscode.workspace.getWorkspaceFolder(vscode.Uri.file(filename))?.uri
+      .fsPath,
+    runtimeExecutable: "npx",
+    skipFiles: ["<node_internals>/**"],
+    type: "pwa-node",
+    console: "integratedTerminal",
+    internalConsoleOptions: "neverOpen",
+  };
 }
 
-export function debugInTermial(text: string, filename: string) {
-    const casePath = path.dirname(filename);
-    const config = buildDebugConfig(casePath, text);
-    vscode.debug.startDebugging(undefined, config);
+export function runInTerminal(testName: string, filename: string) {
+  const terminal = vscode.window.createTerminal(`vitest - ${testName}`);
+  const command = buildVitestCommand(filename, testName);
+  terminal.sendText(command, true);
+  terminal.show();
+}
+
+export function debugInTermial(testName: string, filename: string) {
+  const config = buildDebugConfig(filename, testName);
+  vscode.debug.startDebugging(undefined, config);
 }

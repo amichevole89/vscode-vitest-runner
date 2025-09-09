@@ -1,12 +1,12 @@
 {
-  "name": "vscode-vitest-runner",
-  "displayName": "Vitest Runner",
-  "version": "0.0.4",
+  "name": "vscode-vitest-runner-optimized",
+  "displayName": "Vitest Runner Optimized",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "icon": "logo.png",
   "license": "MIT",
-  "description": "Vitest case runner.",
-  "publisher": "kingwl",
+  "description": "Vitest case runner - optimized.",
+  "publisher": "amichevole",
   "engines": {
     "vscode": "^1.65.0"
   },
@@ -19,8 +19,8 @@
     "runner",
     "codelens"
   ],
-  "repository": "git@github.com:kwai-explore/vscode-vitest-runner.git",
-  "author": "kingwl <kingwenlu@gmail.com>",
+  "repository": "git@github.com:amichevole89/vscode-vitest-runner.git",
+  "author": "amichevole89 <postino.amichevole@gmail.com>",
   "activationEvents": [
     "onLanguage:typescript",
     "onLanguage:javascript",
