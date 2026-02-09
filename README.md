@@ -1,58 +1,50 @@
-# vscode-vitest-runner
+# Vitest Runner Optimized
 
-Run a single Vitest case from VS Code, debug it, or loop it N times to hunt flakiness — all from real terminals.
+A lightweight VS Code extension for running Vitest tests directly from your editor. Execute, debug, or stress-test individual test cases with a single command.
 
-> Forked from [kwai-explore/vscode-vitest-runner](https://github.com/kwai-explore/vscode-vitest-runner)
+## Why This Extension?
 
-## Features
+- **Zero configuration** — works out of the box with any Vitest project
+- **Real terminals** — each test runs in its own integrated terminal, no output collision
+- **Flaky test detection** — loop a test N times to catch intermittent failures
+- **Minimal footprint** — does one thing well without bloat
 
-- **Run test** at cursor (opens a fresh integrated terminal).
-- **Debug test** with Node debugger (integrated terminal).
-- **Run ×N (loop)** to detect flaky tests; shows per-run header and a final summary.
-- Uses the workspace folder as **cwd** for correct module resolution.
+## Commands
 
-> **Platform:** POSIX shells only (macOS/Linux). Windows PowerShell/CMD not supported in this fork.
+| Command | Description |
+|---------|-------------|
+| `Vitest Runner: Run` | Execute the test at cursor |
+| `Vitest Runner: Debug` | Debug the test with Node inspector |
+| `Vitest Runner: Run ×N` | Loop the test multiple times |
 
-## Usage
+Access these via Command Palette (`Cmd+Shift+P` / `Ctrl+Shift+P`) while your cursor is inside a test block.
 
-1. Open a test file in VS Code.
-2. Place your cursor in the test you want to run (or select its name).
-3. Use the Command Palette and choose:
-
-   - **Vitest Runner: Run**
-   - **Vitest Runner: Debug**
-   - **Vitest Runner: Run ×N**
-
-4. Each action opens a **new** terminal so runs don’t stomp each other.
-
-## Settings
-
-Add any of these to your workspace settings:
+## Configuration
 
 ```jsonc
 {
-  // Extra args to pass to Vitest on every run
+  // Number of iterations for Run ×N (default: 20)
+  "vitestRunner.loopCount": 20,
+
+  // Additional arguments passed to Vitest
   "vitestRunner.extraArgs": ["--pool=threads"],
 
-  // How many iterations for "Run ×N"
-  "vitestRunner.loopCount": 20
+  // Enable FORCE_COLOR=1 environment variable (default: true)
+  "vitestRunner.forceColorEnv": true,
+
+  // Append --color flag to Vitest (default: true)
+  "vitestRunner.addColorFlag": true
 }
 ```
 
-### Examples
+## Supported Platforms
 
-- Run a single named test with extra args:
+macOS and Linux only. This extension uses POSIX shell commands and does not support Windows PowerShell or CMD.
 
-  ```jsonc
-  { "vitestRunner.extraArgs": ["--reporter=verbose"] }
-  ```
+## Acknowledgments
 
-## Known limitations
+This project is a fork of [kwai-explore/vscode-vitest-runner](https://github.com/kwai-explore/vscode-vitest-runner), modified for personal workflow preferences.
 
-- Windows shells aren’t supported in this fork.
-- “Run ×N” uses real terminals; if you start multiple loops, each gets its own terminal.
+## License
 
-## Credits
-
-Heavily based on the excellent work in the original
-[kwai-explore/vscode-vitest-runner](https://github.com/kwai-explore/vscode-vitest-runner).
+MIT

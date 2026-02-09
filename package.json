@@ -1,8 +1,8 @@
 {
   "name": "vscode-vitest-runner-optimized",
   "displayName": "Vitest Runner Optimized",
-  "description": "Vitest case runner - optimized.",
-  "version": "0.1.0",
+  "description": "Run, debug, or stress-test individual Vitest cases from your editor. Lightweight and zero-config.",
+  "version": "0.1.1",
   "publisher": "amichevole",
   "license": "MIT",
   "icon": "logo.png",
@@ -17,8 +17,11 @@
   ],
   "keywords": [
     "vitest",
+    "test",
     "runner",
-    "codelens"
+    "debug",
+    "flaky",
+    "testing"
   ],
   "main": "dist/index.js",
   "activationEvents": [
