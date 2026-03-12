@@ -2,7 +2,7 @@
   "name": "vscode-vitest-runner-optimized",
   "displayName": "Vitest Runner Optimized",
   "description": "Run, debug, or stress-test individual Vitest cases from your editor. Lightweight and zero-config.",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "publisher": "amichevole",
   "license": "MIT",
   "icon": "logo.png",
@@ -28,10 +28,7 @@
     "onLanguage:typescript",
     "onLanguage:javascript",
     "onLanguage:typescriptreact",
-    "onLanguage:javascriptreact",
-    "onCommand:vitest.runTest",
-    "onCommand:vitest.debugTest",
-    "onCommand:vitest.runTestLoop"
+    "onLanguage:javascriptreact"
   ],
   "contributes": {
     "configuration": {
@@ -66,26 +63,31 @@
     "commands": [
       {
         "command": "vitest.runTest",
-        "title": "Run(Vitest)"
+        "title": "Vitest: Run Test"
       },
       {
         "command": "vitest.debugTest",
-        "title": "Debug(Vitest)"
+        "title": "Vitest: Debug Test"
       },
       {
         "command": "vitest.runTestLoop",
-        "title": "Run(×N)"
+        "title": "Vitest: Run Test Multiple Times"
+      },
+      {
+        "command": "vitest.runFile",
+        "title": "Vitest: Run All Tests in File"
       }
     ]
   },
   "scripts": {
     "build": "node ./scripts/build.js",
-    "package": "yarn build && yarn vsce package",
+    "package": "npm run build && npx vsce package",
     "format:check": "prettier --config ./prettier.config.json --c ./src/**/*.ts",
-    "format:write": "yarn format:check --write"
+    "format:write": "npm run format:check -- --write"
   },
   "devDependencies": {
-    "@types/node": "^24.3.1",
+    "@types/node": "^18.0.0",
+    "@types/react": "^19.2.14",
     "@types/vscode": "^1.65.0",
     "esbuild": "^0.14.27",
     "prettier": "^2.6.0",
